@@ -14,7 +14,7 @@ export class AppComponent {
     this.userService.getUsers()
       .subscribe({
         next: resp => {
-          console.log('aaaa',resp);
+          console.log('RESPONSE -> ',resp);
         },
         error: (err:HttpErrorResponse) => {
           console.error('APP.COMPONENT -> ', err);
