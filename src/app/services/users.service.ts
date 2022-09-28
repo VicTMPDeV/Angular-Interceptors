@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,13 @@ export class UsersService {
     return this.http.get('https://reqres.in/api/user', {
       params: queryParams,
       headers: headers
-    });
+    }).pipe(
+      map( resp => resp['data'] ),
+      catchError( (err: HttpErrorResponse) => {
+        return throwError(`HA OCURRIDO UN ERROR: ${err.message}`);
+      })
+    );
+
   }
+
 }

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { UsersService } from './services/users.service';
 
@@ -11,8 +12,13 @@ export class AppComponent {
   constructor(private userService: UsersService){
 
     this.userService.getUsers()
-      .subscribe(resp => {
-        console.log(resp);
+      .subscribe({
+        next: resp => {
+          console.log('aaaa',resp);
+        },
+        error: (err:HttpErrorResponse) => {
+          console.error('APP.COMPONENT -> ', err);
+        }
       });
       
   }
